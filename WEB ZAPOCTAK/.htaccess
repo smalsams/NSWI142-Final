@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /~34179985/cms/
+
+RewriteRule ^articles$ index.php?page=articles [L]
