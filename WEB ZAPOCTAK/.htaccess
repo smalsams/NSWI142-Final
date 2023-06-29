@@ -1,0 +1,13 @@
+RewriteEngine On
+RewriteBase /~34179985/cms/
+
+RewriteRule ^articles$ index.php?page=articles [L]
+
+RewriteRule ^article/([0-9]+)$ index.php?page=article&id=$1 [L]
+
+RewriteRule ^article-edit/([0-9]+)$ index.php?page=article-edit&id=$1 [L]
+
+RewriteRule ^article-edit/$ index.php?page=undefined [L]
+
+RewriteRule ^article/$ index.php?page=undefined [L]
+
