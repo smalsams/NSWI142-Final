@@ -4,13 +4,45 @@ const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 const counterHolder = document.getElementById("counter");
 const table = document.getElementById("edit-form-table");
+let clone = JSON.parse(JSON.stringify(obj));
+clone.sort((a, b) => b.views - a.views);
 
+let topThreeArticles = clone.slice(0, 3);
+
+let topThreeTable = document.getElementById("top-three-table");
+
+let headers = document.createElement("tr");
+headers.setAttribute('id', 'title');
+let titleHeader = document.createElement("th");
+titleHeader.textContent = "Name";
+headers.appendChild(titleHeader);
+let showHeader = document.createElement("th");
+showHeader.textContent = "Show";
+headers.appendChild(showHeader);
+let viewsHeader = document.createElement("th");
+viewsHeader.textContent = "Views";
+headers.appendChild(viewsHeader);
+topThreeTable.appendChild(headers);
+
+for (let article of topThreeArticles) {
+    let row = document.createElement("tr");
+    let titleCell = document.createElement("td");
+    titleCell.textContent = article.name;
+    row.appendChild(titleCell);
+    row.appendChild(createTableCell(createLink("Show", `./article/${article.id}`, "show"), ''));
+    let viewsCell = document.createElement("td");
+    viewsCell.textContent = article.views;
+    row.appendChild(viewsCell);
+    topThreeTable.appendChild(row);
+}
 prevButton.addEventListener("click", prevPage);
 nextButton.addEventListener("click", nextPage);
+
 function displayPage(page) {
     table.replaceChildren();
     updateCounter();
     updateButtonsVisibility(page);
+    updateTopVisibility(page);
     displayTableContent(page);
 }
 
@@ -21,7 +53,11 @@ function updateCounter() {
 
 function updateButtonsVisibility(page) {
     prevButton.style.visibility = page === 0 ? "hidden" : "visible";
-    nextButton.style.visibility = (page === number_of_elements / 10 - 1 || page === Math.floor(number_of_elements / 10)) ? "hidden" : "visible";
+    nextButton.style.visibility = (page === number_of_elements / 10 - 1 || page === Math.floor(number_of_elements / 10)) 
+    ? "hidden" : "visible";
+}
+function updateTopVisibility(page){
+    topThreeTable.style.display = page === 0 ? "inline" : "none";
 }
 
 function displayTableContent(page) {
@@ -78,6 +114,9 @@ function deleteArticle(event) {
                     .then(data => {
                         obj = data;
                         number_of_elements = obj.length;
+                        if (number_of_elements % 10 === 0 && curr_page === Math.floor(number_of_elements / 10)) {
+                            curr_page--;
+                        }
                         displayPage(curr_page);
                     });
             }
@@ -97,4 +136,5 @@ function nextPage() {
     }
     displayPage(curr_page);
 }
+
 displayPage(curr_page);

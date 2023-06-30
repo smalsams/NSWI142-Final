@@ -13,29 +13,37 @@ class ArticleViewer {
         $aId = $_GET["id"];
         if (isset($_POST["main-page-return"])) {
             header("Location: ../articles");
+            return;
         }
         if (isset($_POST["edit-page"])){
             header("Location: ../article-edit/" . $aId);
+            return;
         }
+
+        $query_handler = $this->mysqli->prepare("UPDATE articles SET views=views+1 WHERE id = ?");
+        $query_handler->bind_param("i", $aId);
+        $query_handler->execute();
         $this->fetchArticle($aId);
         $this->renderArticle();
         $this->renderForm();
     }
-
     private function fetchArticle($id) {
-        $query = "SELECT * FROM articles WHERE id = $id";
-        $query_result = mysqli_query($this->mysqli, $query);
-        $this->article = mysqli_fetch_assoc($query_result);
+        $query_handler = $this->mysqli->prepare("SELECT * FROM articles WHERE id = ?");
+        $query_handler->bind_param("i", $id);
+        $query_handler->execute();
+        $result = $query_handler->get_result();
+        $this->article = $result->fetch_assoc();
     }
 
     private function renderArticle() {
         ?>
         <table>
             <tr>
-                <td rowspan="2"><h3><?php echo $this->article["name"] ?></h3></td>
+                <td><h3><?php echo htmlspecialchars($this->article["name"])?></h3></td>
             </tr>
+            <tr><td><p>Number of views: <?php echo htmlspecialchars($this->article["views"])?></p></td></tr>
         </table>
-        <p><?php echo $this->article["content"] ?></p>
+        <p><?php echo htmlspecialchars($this->article["content"])?></p>
         <?php
     }
 

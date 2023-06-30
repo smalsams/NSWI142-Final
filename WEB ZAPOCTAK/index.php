@@ -56,11 +56,11 @@ class PageHandler {
 
     private function queryArticle() {
         $id = $_GET["id"];
-        $queried_article = mysqli_fetch_assoc(
-            mysqli_query(
-                $this->mysqli, "SELECT * FROM articles WHERE id = $id"
-            )
-        );
+        $query_handler = $this->mysqli->prepare("SELECT * FROM articles WHERE id = ?");
+        $query_handler->bind_param("i", $id);
+        $query_handler->execute();
+        $result = $query_handler->get_result();
+        $queried_article = $result->fetch_assoc();
         if(!$queried_article){
             $this->sendError();
         }

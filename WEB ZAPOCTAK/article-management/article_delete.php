@@ -10,4 +10,3 @@ $query_handler->execute();
 
 
 $mysqli->close();
-?>

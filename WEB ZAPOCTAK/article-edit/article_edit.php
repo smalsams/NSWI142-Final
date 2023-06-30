@@ -14,6 +14,7 @@ class ArticleEditor {
         if (isset($_POST["save"])) {
             $this->updateArticle($id, $_POST["article-name"], $_POST["article-content"]);
             header("Location: ../articles");
+            return;
         }
         $this->fetchArticle($id);
         $this->mysqli->close();
@@ -54,7 +55,7 @@ class ArticleEditor {
         <table id="edit-form-table">
           <tr id="edit-buttons">
             <td><input type="submit" name="save" value="Save"></td>
-            <td><button type="button" id="main-page-return">Back to articles</button></td>
+            <td><button type="button" id="main-page-return">Back to the main page</button></td>
           </tr>
         </table>
       </form>

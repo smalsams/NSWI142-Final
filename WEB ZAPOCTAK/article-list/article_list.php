@@ -7,10 +7,19 @@ class ArticleManager {
     }
 
     public function handleRequest() {
+        $this->renderTop();
         $this->renderTable();
         $this->renderButtons();
         $this->renderDialog();
         $this->renderScripts();
+    }
+
+    private function renderTop(){
+        ?>
+        <table id="top-three-table">
+            
+        </table>
+        <?php
     }
 
     private function renderTable() {
