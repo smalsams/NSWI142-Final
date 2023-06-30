@@ -11,8 +11,8 @@ class ArticleEditor {
 
     public function handleRequest() {
         $id = $_GET["id"];
-        if (isset($_POST['save'])) {
-            $this->updateArticle($id, $_POST['article-name'], $_POST['article-content']);
+        if (isset($_POST["save"])) {
+            $this->updateArticle($id, $_POST["article-name"], $_POST["article-content"]);
             header("Location: ../articles");
         }
         $this->fetchArticle($id);
@@ -21,15 +21,18 @@ class ArticleEditor {
     }
 
     private function updateArticle($id, $name, $content) {
-        $query = "UPDATE articles SET name = '$name', content = '$content' WHERE id = $id;";
-        $this->mysqli->query($query);
-    }
+      $query_handler = $this->mysqli->prepare("UPDATE articles SET name = ?, content = ? WHERE id = ?");
+      $query_handler->bind_param("ssi", $name, $content, $id);
+      $query_handler->execute();
+  }
 
-    private function fetchArticle($id) {
-        $query_result = $this->mysqli->query("SELECT * FROM articles WHERE id =$id");
-        $this->article = mysqli_fetch_assoc($query_result);
-    }
-
+  private function fetchArticle($id) {
+    $query_handler = $this->mysqli->prepare("SELECT * FROM articles WHERE id = ?");
+    $query_handler->bind_param("i", $id);
+    $query_handler->execute();
+    $result = $query_handler->get_result();
+    $this->article = $result->fetch_assoc();
+}
     private function renderForm() {
       ?>
 
@@ -45,11 +48,11 @@ class ArticleEditor {
             <td><label for="article-body">Content</label></td>
           </tr>
           <tr>
-            <td><textarea id="article-body" name="article-content" required maxlength="1024"><?php echo $this->article['content']; ?></textarea></td>
+            <td><textarea id="article-body" name="article-content" required maxlength="1024" rows="20" cols="100"><?php echo $this->article['content']; ?></textarea></td>
           </tr>
         </table>
-        <table id="table1">
-          <tr>
+        <table id="edit-form-table">
+          <tr id="edit-buttons">
             <td><input type="submit" name="save" value="Save"></td>
             <td><button type="button" id="main-page-return">Back to articles</button></td>
           </tr>

@@ -1,21 +1,21 @@
-const createButton = document.getElementById('create-button');
-const createDialog = document.getElementById('create-dialog');
-const createCancel = document.getElementById('create-cancel');
-const articleName = document.getElementById('article-name');
-const createSubmit = document.getElementById('create-submit');
-const createForm = document.getElementById('create-form');
+const createButton = document.getElementById("create-button");
+const createDialog = document.getElementById("create-dialog");
+const createCancel = document.getElementById("create-cancel");
+const articleName = document.getElementById("article-name");
+const createSubmit = document.getElementById("create-submit");
+const createForm = document.getElementById("create-form");
 
-createButton.addEventListener('click', openCreateDialog);
-createCancel.addEventListener('click', closeCreateDialog);
-articleName.addEventListener('input', toggleSubmitButton);
-createForm.addEventListener('submit', submitArticle);
+createButton.addEventListener("click", openCreateDialog);
+createCancel.addEventListener("click", closeCreateDialog);
+articleName.addEventListener("input", toggleSubmitButton);
+createForm.addEventListener("submit", submitArticle);
 
 function openCreateDialog() {
-    createDialog.style.display = 'block';
+    createDialog.style.display = "block";
 }
 
 function closeCreateDialog() {
-    createDialog.style.display = 'none';
+    createDialog.style.display = "none";
 }
 
 function toggleSubmitButton() {
@@ -27,8 +27,8 @@ function submitArticle(event) {
 
     const name = articleName.value;
 
-    fetch('https://webik.ms.mff.cuni.cz/~34179985/cms/article-management/article_create.php', {
-        method: 'POST',
+    fetch("https://webik.ms.mff.cuni.cz/~34179985/cms/article-management/article_create.php", {
+        method: "POST",
         body: JSON.stringify({ name })
     })
     .then(response => response.json())

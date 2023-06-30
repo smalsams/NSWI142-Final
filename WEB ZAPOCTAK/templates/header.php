@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="https://webik.ms.mff.cuni.cz/~34179985/cms/styles.css">
         <title>Web application project</title>
     </head>
 

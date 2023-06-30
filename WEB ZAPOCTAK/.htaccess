@@ -11,3 +11,6 @@ RewriteRule ^article-edit/$ index.php?page=undefined [L]
 
 RewriteRule ^article/$ index.php?page=undefined [L]
 
+RewriteRule ^article-management/$ index.php?page=undefined [L]
+
+RewriteRule ^article-list/$ index.php?page=undefined [L]

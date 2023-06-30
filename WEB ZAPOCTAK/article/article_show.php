@@ -42,9 +42,9 @@ class ArticleViewer {
     private function renderForm() {
         ?>
         <form method="post">
-            <table id="pgs">
-                <td><input type="submit" name="main-page-return" value="Back to the main page"></td>
+            <table class="buttons">
                 <td><input type="submit" name="edit-page" value="Edit"></td>
+                <td><input type="submit" name="main-page-return" value="Back to the main page"></td>
             </table>
         </form>
         <?php

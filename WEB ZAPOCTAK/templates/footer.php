@@ -1,4 +1,4 @@
     </main>
-    <p style="text-align:center">Made by Samuel Serafin</p>
+    <p id="footer">Made by Samuel Serafin</p>
     </body>
 </html>

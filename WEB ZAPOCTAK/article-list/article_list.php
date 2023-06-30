@@ -1,9 +1,7 @@
 <?php
-include "db_config.php";
 
 class ArticleManager {
     private $articles;
-
     public function __construct() {
         $this->articles = file_get_contents("https://webik.ms.mff.cuni.cz/~34179985/cms/article-management/articles_get.php");
     }
@@ -24,7 +22,7 @@ class ArticleManager {
             </tr>
         </table>
         
-        <table id="table1">
+        <table id="edit-form-table">
 
         </table>
         <?php
@@ -32,11 +30,11 @@ class ArticleManager {
 
     private function renderButtons() {
         ?>
-        <table id="buttons">
+        <table class="buttons">
             <tr>
                 <td><button id="prev-button">Previous</button></td>
-                <td><button id="next-button">Next</button></td>
                 <td><button id="create-button">Create article</button></td>
+                <td><button id="next-button">Next</button></td>
             </tr>
         </table>
         <?php
@@ -64,9 +62,9 @@ class ArticleManager {
     private function renderScripts() {
         ?>
         <script>
-            var obj = JSON.parse('<?php echo str_replace(array("\r", "\n"), "", $this->articles); ?>');
+            var obj = JSON.parse('<?php echo str_replace(array("\r", "\n"), '', $this->articles); ?>');
         </script>
-        <script type="text/javascript" src="./controllers/table_c.js"></script>
+        <script type="text/javascript" src="./controllers/table_controller.js"></script>
         <script type="text/javascript" src="./controllers/control.js"></script>
         <?php
     }
